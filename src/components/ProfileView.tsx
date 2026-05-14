@@ -169,7 +169,11 @@ function CharacterCanvas({ character }: { character: CharacterData }) {
 
   useEffect(() => { setLoaded(false); }, [character.id]);
 
-  const hasGlbs = character.floatingGlbs && character.floatingGlbs.length > 0;
+  // iOS WebGL memory limit (~256MB) can't handle multiple high-res GLBs in one context.
+  // Fall back to CSS floating symbols on iOS — they already exist for non-GLB characters.
+  const isMobile = useMemo(() => /iPad|iPhone|iPod|Android/i.test(navigator.userAgent), []);
+const hasGlbs = !isMobile && character.floatingGlbs && character.floatingGlbs.length > 0;
+
   const floatingSymbols = useMemo(() => {
     const baseIcons = ['✎', '🎧ྀི', '𓍝', '✉︎'];
     return Array.from({ length: 8 }).map((_, i) => {
@@ -204,10 +208,10 @@ function CharacterCanvas({ character }: { character: CharacterData }) {
 
       <LoadingOverlay color={character.color} visible={!loaded} />
 
-      <Canvas  camera={{ position: [0, 0, 3.5], fov: 35 }} 
-               dpr={[1, 1.5]} 
-               performance={{ min: 0.5 }} 
-              style={{ touchAction: 'pan-y' }} 
+      <Canvas camera={{ position: [0, 0, 3.5], fov: 35 }}
+              dpr={isMobile ? [1, 1] : [1, 1.5]}
+              performance={{ min: 0.5 }}
+              style={{ touchAction: 'pan-y' }}
               >
         <Suspense fallback={null}>
         <Stage environment="city" intensity={0.6} adjustCamera={character.id === 'creator' ? 1.25 : character.id === 'strategist' ? 0.95 : character.id === 'executive' ? 1.00 : 1.00}>
