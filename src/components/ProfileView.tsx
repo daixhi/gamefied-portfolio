@@ -761,7 +761,7 @@ function GameModal({ characterId, color, onClose }: { characterId: string, color
         <div className="flex flex-col gap-6">
           <div className="text-center space-y-2 mb-4">
              <h3 className="text-2xl font-serif text-white uppercase tracking-widest">System Firewall Active</h3>
-             <p className="text-[11px] text-white/40 font-display tracking-widest uppercase">Survive the corruption for 60 seconds to gain access.</p>
+             <p className="text-[11px] text-white/40 font-display tracking-widest uppercase">Survive the corruption to gain access.</p>
           </div>
           {/* Game Canvas */}
           <MiniGame characterId={characterId} color={color} onEnd={(won) => setStatus(won ? 'won' : 'lost')} />
@@ -857,9 +857,9 @@ function MiniGame({ characterId, color, onEnd }: { characterId: string, color: s
         return;
       }
 
-      // Detect Win (60 Seconds)
+      // Detect Win (30 Seconds)
       const elapsed = Date.now() - state.current.startTime;
-      if (elapsed >= 60000) {
+      if (elapsed >= 30000) {
         state.current.isGameOver = true;
         onEnd(true); // survived
         return;
