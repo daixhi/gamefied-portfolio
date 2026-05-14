@@ -992,13 +992,20 @@ function PostGameScreen({ status, color, onRestart, onClose }: any) {
              {status === 'won' ? 'Access Granted.' : 'Simulation Failed.'}
          </h3>
          <p className="text-[9px] md:text-[10px] text-white/40 font-display tracking-[0.3em] uppercase px-2">
-             {status === 'won' ? 'Data access granted. Awaiting further communication.' : 'Firewall breached. Re-initialization required.'}
+             {status === 'won' ? 'Data access granted. Awaiting further communication. Contact Subject for assignment.' : 'Firewall breached. Re-initialization required. Contact Subject for details.'}
          </p>
       </div>
       
       <PostGameCanvas color={color} />
 
       {/* CONTACT LINKS (say hi~) */}
+      <div className="w-full flex items-center gap-4 mb-[-8px] opacity-60">
+    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-white/10" />
+    <span className="text-[15px] text-white/50 font-display tracking-[0.5em] uppercase whitespace-nowrap">
+        Subject: Prakriti
+    </span>
+    <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-white/10" />
+</div>
       <div className="flex flex-row w-full gap-3 md:gap-4 relative z-10">
           
           <a href="mailto:praina.law@gmail.com" className="flex-1 glass-panel p-4 md:p-5 flex flex-col items-center justify-center gap-2 hover:bg-white/5 transition-colors border border-white/5 group">
