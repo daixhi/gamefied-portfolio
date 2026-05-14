@@ -11,28 +11,19 @@ All media files are free to use (tho why would you want to because I created the
 
 ## Run Locally
 
-Clone the repository
+
+To initialize the archive on your local machine, execute the following sequence:
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-```
-
-Navigate to the project directory
+git clone [https://github.com/daixhi/gamefied-portfolio.git](https://github.com/daixhi/gamefied-portfolio.git)
 
 ```bash
-cd your-repo-name
-```
-
-Install dependencies
+cd gamefied-portfolio
 
 ```bash
 npm install
-```
-
-Start the development server
 
 ```bash
 npm run dev
-```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Local Port: http://localhost:5173
