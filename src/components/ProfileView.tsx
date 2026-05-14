@@ -223,8 +223,10 @@ const hasGlbs = !isMobile && character.floatingGlbs && character.floatingGlbs.le
 
       <Canvas camera={{ position: [0, 0, 3.5], fov: 35 }}
               dpr={isMobile ? [1, 1] : [1, 1.5]}
-              performance={{ min: 0.5 }}
+              performance={{ min: 0.3 }}
+              frameloop="demand"
               style={{ touchAction: 'pan-y' }}
+              gl={{ antialias: !isMobile, powerPreference: 'low-power' }}
               onCreated={({ gl }) => { return () => gl.dispose(); }}
               >
         <Suspense fallback={null}>
@@ -889,6 +891,20 @@ function MiniGame({ characterId, color, onEnd }: { characterId: string, color: s
     
     window.addEventListener('keydown', handleKeyDown, { passive: false });
 
+    // Touch anywhere on the page jumps — not just the game div
+    const handleTouch = (e: TouchEvent) => { e.preventDefault(); jump(); };
+    window.addEventListener('touchstart', handleTouch, { passive: false });
+
+    // Pause the loop when tab/app is hidden to save battery
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (reqRef.current) cancelAnimationFrame(reqRef.current);
+      } else if (!state.current.isGameOver) {
+        reqRef.current = requestAnimationFrame(loop);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
     const timer = setInterval(() => {
       setTimeLeft(t => Math.max(0, t - 1));
     }, 1000);
@@ -896,6 +912,8 @@ function MiniGame({ characterId, color, onEnd }: { characterId: string, color: s
     return () => {
       if (reqRef.current) cancelAnimationFrame(reqRef.current);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('touchstart', handleTouch);
+      document.removeEventListener('visibilitychange', handleVisibility);
       clearInterval(timer);
     };
   }, [onEnd, obstacleImages]);
@@ -989,9 +1007,10 @@ function PostGameCanvas({ color }: { color: string }) {
         <Canvas
           camera={{ position: [0, 0, 4.5], fov: 45 }}
           dpr={isMobile ? [1, 1] : [1, 1.5]}
-          performance={{ min: 0.5 }}
+          performance={{ min: 0.3 }}
+          frameloop="demand"
           style={{ width: '100%', height: '100%', touchAction: 'pan-y' }}
-          gl={{ antialias: true, alpha: true }}
+          gl={{ antialias: !isMobile, alpha: true, powerPreference: 'low-power' }}
           onCreated={({ gl }) => { return () => gl.dispose(); }}
         >
           <Suspense fallback={null}>
