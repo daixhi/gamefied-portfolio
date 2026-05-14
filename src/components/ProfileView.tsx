@@ -330,7 +330,7 @@ export function ProfileView({ character, onBack }: ProfileViewProps) {
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> RETURN_TO_MENU
         </button>
         <div className="text-[10px] uppercase tracking-[0.5em] font-display text-white/20">
-          SECURE_ACCESS // <span className="text-white/60">{character.title}</span>
+        SECURE_ACCESS // <span className="text-white/60">PRAKRITI // {character.title}</span>    
         </div>
       </header>
 

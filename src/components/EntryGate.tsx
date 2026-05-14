@@ -137,7 +137,7 @@ export function EntryGate({ onEnter }: EntryGateProps) {
         <div className="absolute bottom-8 left-8 w-12 h-12 border-b border-l border-white/10" />
         <div className="absolute bottom-8 right-8 w-12 h-12 border-b border-r border-white/10" />
         <div className="absolute bottom-12 w-full flex justify-between px-12 text-[8px] font-mono text-white/20 uppercase tracking-[0.2em]">
-          <span>Identity Protocol v4.0.2</span>
+          <span>Identity Protocol v0.0.1</span>
           <span>Secure Connection Established</span>
         </div>
       </motion.div>

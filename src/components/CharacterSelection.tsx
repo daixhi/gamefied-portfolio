@@ -122,7 +122,7 @@ export function CharacterSelection({ onSelect }: CharacterSelectionProps) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 1.2 }}
           >
-            SELECT YOUR PLAYER
+            SELECT YOUR ROLE
           </motion.span>
           
           <motion.div
