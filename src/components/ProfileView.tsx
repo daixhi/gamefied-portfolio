@@ -136,9 +136,22 @@ function PostGameScene({ color }: { color: string }) {
 function FloatingProp({ url, position }: { url: string, position: [number, number, number] }) {
   const { scene } = useGLTF(url);
   const cloned = useMemo(() => scene.clone(), [scene]);
+
+  useEffect(() => {
+    return () => {
+      cloned.traverse((obj: any) => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          if (Array.isArray(obj.material)) obj.material.forEach((m: any) => m.dispose());
+          else obj.material.dispose();
+        }
+      });
+    };
+  }, [cloned]);
+
   return (
     <Float speed={4} rotationIntensity={2} floatIntensity={2} position={position}>
-      <primitive object={cloned} scale={0.3} /> 
+      <primitive object={cloned} scale={0.3} />
     </Float>
   );
 }
@@ -212,6 +225,7 @@ const hasGlbs = !isMobile && character.floatingGlbs && character.floatingGlbs.le
               dpr={isMobile ? [1, 1] : [1, 1.5]}
               performance={{ min: 0.5 }}
               style={{ touchAction: 'pan-y' }}
+              onCreated={({ gl }) => { return () => gl.dispose(); }}
               >
         <Suspense fallback={null}>
         <Stage environment="city" intensity={0.6} adjustCamera={character.id === 'creator' ? 1.25 : character.id === 'strategist' ? 0.95 : character.id === 'executive' ? 1.00 : 1.00}>
@@ -936,6 +950,7 @@ function MiniGame({ characterId, color, onEnd }: { characterId: string, color: s
 
 // PostGameCanvas
 function PostGameCanvas({ color }: { color: string }) {
+  const isMobile = useMemo(() => /iPad|iPhone|iPod|Android/i.test(navigator.userAgent), []);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [canvasReady, setCanvasReady] = useState(false);
 
@@ -973,10 +988,11 @@ function PostGameCanvas({ color }: { color: string }) {
       {canvasReady && (
         <Canvas
           camera={{ position: [0, 0, 4.5], fov: 45 }}
-          dpr={[1, 1.5]}
+          dpr={isMobile ? [1, 1] : [1, 1.5]}
           performance={{ min: 0.5 }}
           style={{ width: '100%', height: '100%', touchAction: 'pan-y' }}
           gl={{ antialias: true, alpha: true }}
+          onCreated={({ gl }) => { return () => gl.dispose(); }}
         >
           <Suspense fallback={null}>
             <PostGameScene color={color} />
