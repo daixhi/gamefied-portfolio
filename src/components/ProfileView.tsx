@@ -176,7 +176,7 @@ function OnLoadSignal({ onLoad }: { onLoad: () => void }) {
   return null;
 }
 
-function CharacterCanvas({ character }: { character: CharacterData }) {
+function CharacterCanvas({ character, paused = false }: { character: CharacterData, paused?: boolean }) {
   const [loaded, setLoaded] = useState(false);
   const onLoad = useCallback(() => setLoaded(true), []);
 
@@ -224,7 +224,7 @@ const hasGlbs = !isMobile && character.floatingGlbs && character.floatingGlbs.le
       <Canvas camera={{ position: [0, 0, 3.5], fov: 35 }}
               dpr={isMobile ? [1, 1] : [1, 1.5]}
               performance={{ min: 0.3 }}
-              frameloop="demand"
+              frameloop={paused ? "never" : "demand"}
               style={{ touchAction: 'pan-y' }}
               gl={{ antialias: !isMobile, powerPreference: 'low-power' }}
               onCreated={({ gl }) => { return () => gl.dispose(); }}
@@ -338,7 +338,7 @@ export function ProfileView({ character, onBack }: ProfileViewProps) {
     };
   }, [showGameModal, activeContribution]);
 
-  const memoizedCanvas = <CharacterCanvas character={character} />;
+  const memoizedCanvas = <CharacterCanvas character={character} paused={showGameModal} />;
 
   return (
     <div className={`min-h-screen relative flex flex-col pt-6 sm:pt-10 px-4 sm:px-8 md:px-12 lg:px-16 pb-16 sm:pb-20 overflow-hidden`}>
