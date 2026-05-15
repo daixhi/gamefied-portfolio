@@ -128,7 +128,12 @@ function PostGameScene({ color }: { color: string }) {
       {emojisReady && proxyRef.current && (
         <NeonEmojis color={color} count={60} proxyRef={proxyRef} visible={!isResizing} />
       )}
-      <OrbitControls autoRotate autoRotateSpeed={2} enableZoom={false} minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} />
+      <OrbitControls 
+      autoRotate 
+      autoRotateSpeed={3} 
+      enableZoom={false} 
+      minPolarAngle={Math.PI / 2} 
+      maxPolarAngle={Math.PI / 2}  />
     </>
   );
 }
@@ -244,7 +249,14 @@ const hasGlbs = !isMobile && character.floatingGlbs && character.floatingGlbs.le
           ))}
           <OnLoadSignal onLoad={onLoad} />
         </Suspense>
-        <OrbitControls autoRotate autoRotateSpeed={0.8} enableZoom={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
+        <OrbitControls
+        autoRotate 
+        autoRotateSpeed={1.0} 
+        enableZoom={false} 
+        enablePan={false}
+        enableRotate={!isMobile}
+        maxPolarAngle={Math.PI / 2} 
+        minPolarAngle={Math.PI / 2} />
       </Canvas>
     </div>
   );

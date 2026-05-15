@@ -33,13 +33,19 @@
     @apply bg-zinc-950 text-zinc-100 antialiased selection:bg-pink-500/30;
     font-family: var(--font-sans);
     /* Updated to the Neon Pink ✧ symbol */
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='24' font-size='24' fill='%23FF77FF'>✧</text></svg>") 12 12, auto;
-  }
+   body {
+  cursor: url("data:image/svg+xml;...✧...") 12 12, auto;
+}
 
-  button, a, .cursor-pointer {
-    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='24' font-size='24' fill='%23FF77FF'>✧</text></svg>") 12 12, pointer !important;
-  }
+button, a, .cursor-pointer {
+  cursor: url("data:image/svg+xml;...✧...") 12 12, pointer !important;
+}
 
+@media (pointer: coarse) {
+  body, button, a, .cursor-pointer {
+    cursor: auto !important;
+  }
+}
   h1, h2, h3, h4 {
     font-family: var(--font-serif);
   }
