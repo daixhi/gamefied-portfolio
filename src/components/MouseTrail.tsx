@@ -30,7 +30,6 @@ export function MouseTrail() {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[500] overflow-hidden">
-      {/* Main Cursor Glow */}
       <motion.div
         animate={{
           x: mousePos.x - 100,
